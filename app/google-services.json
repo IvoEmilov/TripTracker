@@ -1,0 +1,85 @@
+{
+  "project_info": {
+    "project_number": "223858654238",
+    "firebase_url": "https://buddycartracker-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "buddycartracker",
+    "storage_bucket": "buddycartracker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:223858654238:android:3650b6e7bbbb38094e820f",
+        "android_client_info": {
+          "package_name": "com.example.buddycartracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "223858654238-6074150tpb2mrs9h1rrkn59tgfh5mmfm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.buddycartracker",
+            "certificate_hash": "e667d30b5d4853839ead4e36849c712259bdada9"
+          }
+        },
+        {
+          "client_id": "223858654238-vsabvtfqclkcdk1c32n1u4958tgsh2jn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-RPN73UFYaCi-k_YVqy__YuIAGmdIC5U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "223858654238-vsabvtfqclkcdk1c32n1u4958tgsh2jn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:223858654238:android:cd9d336a09e1e9ad4e820f",
+        "android_client_info": {
+          "package_name": "com.example.triptracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "223858654238-t4fhntf4amrtscemmkksgm4i4pm6v6f5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.triptracker",
+            "certificate_hash": "e667d30b5d4853839ead4e36849c712259bdada9"
+          }
+        },
+        {
+          "client_id": "223858654238-vsabvtfqclkcdk1c32n1u4958tgsh2jn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-RPN73UFYaCi-k_YVqy__YuIAGmdIC5U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "223858654238-vsabvtfqclkcdk1c32n1u4958tgsh2jn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

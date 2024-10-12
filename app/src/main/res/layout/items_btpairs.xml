@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:id="@+id/cardViewBTPairs"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="10dp"
+        app:strokeColor="#2f2f2f"
+        app:strokeWidth="1dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/bg_img_gradient"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient_minty"/>
+
+            <RelativeLayout
+                android:id="@+id/loBTPairs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Device Name"
+                    android:gravity="center_horizontal"
+                    android:padding="5dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:id="@+id/tvDeviceName"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvDeviceName"
+                    android:padding="5dp"
+                    android:text="Device MAC Address"
+                    android:gravity="end"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:id="@+id/tvDeviceMAC"/>
+
+            </RelativeLayout>
+        </FrameLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

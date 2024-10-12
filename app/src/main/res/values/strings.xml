@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">TripTracker</string>
+        <string-array name="dataCommands">
+            <item>Speed</item>
+            <item>RPM</item>
+            <item>Coolant Temp</item>
+            <item>MAF</item>
+            <item>Throttle%</item>
+            <item>Oil Temp</item>
+        </string-array>
+</resources>
