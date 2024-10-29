@@ -9,6 +9,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Database {
     private FirebaseDatabase database = FirebaseDatabase.getInstance("https://buddycartracker-default-rtdb.europe-west1.firebasedatabase.app/");
@@ -77,7 +78,18 @@ public class Database {
         });
     }
     public void addTrip(Trip trip){
-        userRef.child("trips").child(String.valueOf(trip.getPosition())).setValue(trip);
+        userRef.child("trips").child(String.format(Locale.ENGLISH,"%f%f%f%f", trip.getStartLongitude(),trip.getStartLatitude(),
+                trip.getEndLongitude(),trip.getEndLatitude()).replace(".","")).setValue(trip);
+    }
+
+    public void removeTrip(Trip trip){
+        userRef.child("trips").child(String.format(Locale.ENGLISH,"%f%f%f%f", trip.getStartLongitude(),trip.getStartLatitude(),
+                trip.getEndLongitude(),trip.getEndLatitude()).replace(".","")).removeValue();
+    }
+
+    public void updateTripPosition(Trip trip){
+        userRef.child("trips").child(String.format(Locale.ENGLISH,"%f%f%f%f", trip.getStartLongitude(),trip.getStartLatitude(),
+                trip.getEndLongitude(),trip.getEndLatitude()).replace(".","")).child("position").setValue(trip.getPosition());
     }
 
 }

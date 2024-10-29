@@ -879,7 +879,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         rvTrips.setLayoutManager(tripsLM);
-        ItemTouchHelper.Callback TripsIthCallback = new RvItemTouchHelper(adapterTrips, Boolean.FALSE, Boolean.FALSE);
+        ItemTouchHelper.Callback TripsIthCallback = new RvItemTouchHelper(adapterTrips, Boolean.FALSE, Boolean.TRUE);
         ItemTouchHelper tripsItemTouchHelper = new ItemTouchHelper(TripsIthCallback);
         adapterTrips.setItemTouchHelper(tripsItemTouchHelper);
         tripsItemTouchHelper.attachToRecyclerView(rvTrips);
@@ -899,8 +899,8 @@ public class MainActivity extends AppCompatActivity {
         Collections.sort(trips, new Comparator<Trip>() {
             @Override
             public int compare(Trip o1, Trip o2) {
-                if( o1.getPosition() < o2.getPosition()) return 1;
-                else return -1;
+                if( o1.getPosition() > o2.getPosition()) return -1;
+                else return 1;
             }
         });
     }

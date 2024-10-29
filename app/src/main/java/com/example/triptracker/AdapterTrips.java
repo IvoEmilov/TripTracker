@@ -43,6 +43,7 @@ public class AdapterTrips extends RecyclerView.Adapter<AdapterTrips.ViewHolder> 
     private int layout_resource;
     private MainActivity activity;
     private DecimalFormat df = new DecimalFormat("#0.00");
+    private Database db;
 
 
     @Override
@@ -52,7 +53,15 @@ public class AdapterTrips extends RecyclerView.Adapter<AdapterTrips.ViewHolder> 
 
     @Override
     public void onItemSwiped(int position) {
+        db.removeTrip(MainActivity.trips.get(position));
+        tripsList.remove(position);
 
+        for(int i=position-1;i>=0;i--){
+            MainActivity.trips.get(i).setPosition(MainActivity.trips.get(i).getPosition()-1);
+            System.out.println(MainActivity.trips.get(i).getDistance() + " position changed to "+(MainActivity.trips.get(i).getPosition()));
+            db.updateTripPosition(MainActivity.trips.get(i));
+        }
+        notifyItemRemoved(position);
     }
 
     public void setItemTouchHelper(ItemTouchHelper itemTouchHelper) {
@@ -103,7 +112,7 @@ public class AdapterTrips extends RecyclerView.Adapter<AdapterTrips.ViewHolder> 
 
         @Override
         public void onLongPress(MotionEvent motionEvent) {
-
+            //itemTouchHelper.startDrag(this);
         }
 
         @Override
@@ -123,6 +132,7 @@ public class AdapterTrips extends RecyclerView.Adapter<AdapterTrips.ViewHolder> 
         this.tripsList = tripsList;
         this.layout_resource = layout_resource;
         this.activity = activity;
+        db = new Database();
     }
 
     @NonNull
