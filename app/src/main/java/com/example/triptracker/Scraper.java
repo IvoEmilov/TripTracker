@@ -52,9 +52,9 @@ public class Scraper extends AsyncTask<Void, Void, Void> {
     private void scrapePrice() {
         try{
             Document document;
-            Element element;
-            String url = "https://m.fuelo.net/m/brand/2?lang=bg";
+            String url = "https://bg.fuelo.net/brand/id/2";
             document = Jsoup.connect(url).get();
+
 
             Element table = document.select("table").get(0); //select the first table.
             Elements rows = table.select("tr");
@@ -65,8 +65,7 @@ public class Scraper extends AsyncTask<Void, Void, Void> {
                 try{
                     if(cols.text().contains("Super Diesel"))
                     {
-                        fuelPrice = Double.parseDouble(cols.text().replace("Super Diesel","").replace("лв.", "")
-                                .replaceAll(" ","").replace(",","."));
+                        fuelPrice = Double.parseDouble(cols.text().split(" ")[2].replace(",","."));
                         Log.d("SCRAPER", String.valueOf(fuelPrice));
                     }
                 }
@@ -76,7 +75,7 @@ public class Scraper extends AsyncTask<Void, Void, Void> {
             }
 
         }
-        catch (IOException e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -316,9 +316,7 @@ public class UpdateUIThread extends Thread {
                 dialog.setContentView(R.layout.dialog_trip);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                //TODO: Add a map of the trip
-                //TODO: Add trip cost
-                double tripCost = ((trip.getAvgFuel()*trip.getDistance())/100)*trip.getFuelPrice();
+                //double tripCost = ((trip.getAvgFuel()*trip.getDistance())/100)*trip.getFuelPrice();
                 DecimalFormat df = new DecimalFormat("#0.00");
 
                 TextView tvAvgFuel = dialog.findViewById(R.id.tvAvgFuel);
@@ -327,7 +325,8 @@ public class UpdateUIThread extends Thread {
                 TextView tvDuration = dialog.findViewById(R.id.tvDuration);
                 TextView tvTripCost = dialog.findViewById(R.id.tvTripCost);
 
-                Button btnOk = dialog.findViewById(R.id.btnOk);
+                Button btnSave = dialog.findViewById(R.id.btnSave);
+                Button btnDismiss = dialog.findViewById(R.id.btnDismiss);
 
 //                tvAvgFuel.setText(String.format("Average Fuel Consumption: %s l/100km", df.format(avgFuel)));
 //                tvAvgSpeed.setText(String.format("Average Vehicle Speed: %s km/h", avgSpeed));
@@ -340,22 +339,29 @@ public class UpdateUIThread extends Thread {
                 tvDuration.setText(String.format("Time Duration: %s", trip.getDuration()));
                 tvTripCost.setText(String.format("Trip Cost: %s BGN", df.format(trip.getTripCost())));
 
-                MainActivity.adapterTrips.add(trip);
-                db.addTrip(trip);
-                MainActivity.sortTrips();
-                MainActivity.adapterTrips.notifyDataSetChanged();
-                Log.d("Position", "Trips after insertion of new one " + String.valueOf(MainActivity.adapterTrips.getItemCount()));
 
 
-
-                btnOk.setOnClickListener(new View.OnClickListener() {
+                btnSave.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        MainActivity.adapterTrips.add(trip);
+                        db.addTrip(trip);
+                        MainActivity.sortTrips();
+                        MainActivity.adapterTrips.notifyDataSetChanged();
+                        Log.d("Position", "Trips after insertion of new one " + String.valueOf(MainActivity.adapterTrips.getItemCount()));
 
-                        //TODO:Option to add to a database
                         dialog.dismiss();
                     }
                 });
+
+                btnDismiss.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        dialog.dismiss();
+                    }
+                });
+
 
                 dialog.show();
             }

@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 
 public class LogWriter {
 
-    private final static String logLocation = "storage/emulated/0/Download/";
+    private final static String logLocation = "storage/emulated/0/Download/OBD/";
     private final static String logFileName = "OBD_Log.txt";
     private final static String errorFileName = "OBD_Errors.txt";
 

@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.triptracker">
 
+
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
@@ -40,8 +42,6 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.CryptoTracker">
-        <activity android:name="com.example.triptracker.WebviewActivity"></activity>
-        <activity android:name="com.example.triptracker.WalletActivity" />
         <activity android:name="com.example.triptracker.LoginActivity"
             android:exported="true">
             <intent-filter>
@@ -51,7 +51,6 @@
             </intent-filter>
         </activity>
         <activity android:name="com.example.triptracker.MainActivity" />
-        <activity android:name="com.example.triptracker.TransactionsActivity" />
         <activity android:name="com.example.triptracker.ProfileActivity" />
     </application>
 

@@ -73,14 +73,31 @@
                 android:layout_marginTop="5dp"
                 android:textSize="16sp" />
 
-            <Button
-                android:id="@+id/btnOk"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:layout_gravity="center"
-                android:text="OK"
-                android:backgroundTint="#69e5ae"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:text="Save"
+            android:backgroundTint="#69e5ae"/>
+        <Button
+            android:id="@+id/btnDismiss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:text="Dismiss"
+            android:backgroundTint="#ff4444"/>
+    </LinearLayout>
+
+
 
         </LinearLayout>
 </RelativeLayout>
