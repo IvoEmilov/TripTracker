@@ -157,7 +157,6 @@ public class MainActivity extends AppCompatActivity {
 
     static RecyclerView rvBTPairs, rvScanDevices, rvBTConnected, rvTrips;
     private RecyclerView.LayoutManager layoutManager, BTScannedLM, BTConnectedLM, tripsLM;
-    //static Adapter adapter;
     static AdapterTrips adapterTrips;
 
     static AdapterBTPairs BTAdapter, BTAdapterScanned, BTAdapterConnected;
@@ -165,7 +164,6 @@ public class MainActivity extends AppCompatActivity {
 
     private UpdateUIThread UIThread;
     private Database db;
-    static ProgressBar progressBar;
 
     MapView mapView;
     FloatingActionButton btnFocusLocation;
@@ -591,17 +589,6 @@ public class MainActivity extends AppCompatActivity {
                 AnnotationPlugin annotationPlugin = AnnotationPluginImplKt.getAnnotations(mapView);
                 PointAnnotationManager pointAnnotationManager = PointAnnotationManagerKt.createPointAnnotationManager(annotationPlugin, mapView);
 
-//                PointAnnotationOptions pointAnnotationOptions = new PointAnnotationOptions().withTextAnchor(TextAnchor.CENTER).withIconImage(bitmap)
-//                        .withPoint(point);
-//                pointAnnotationManager.create(pointAnnotationOptions);
-
-//                btnSetRoute.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        fetchRoute(point);
-//                        btnSetRoute.setVisibility(View.GONE);
-//                    }
-//                });
                 btnFocusLocation.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -786,7 +773,6 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<BluetoothDevice> getConnectedDevices() {
         if (bluetoothAdapter.isEnabled()) {
-            //tvConnectedDevices.setText("Conected Devices");
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
                 //    ActivityCompat#requestPermissions
@@ -800,11 +786,6 @@ public class MainActivity extends AppCompatActivity {
             BluetoothManager manager = (BluetoothManager) getSystemService(BLUETOOTH_SERVICE);
             List<BluetoothDevice> devices = manager.getConnectedDevices(BluetoothProfile.GATT_SERVER);
             return new ArrayList<BluetoothDevice>(devices);
-//            for (BluetoothDevice device : devices) {
-//                //tvConnectedDevices.append("\nDevice: " + device.getName() + ", " + device);
-//                BTAdapterConnected.add(device);
-//            }
-//            BTAdapterConnected.notifyDataSetChanged();
         } else {
             //bluetooth is off so can't get paired devices
             showToast("Turn ON Bluetooth to get paired devices");

@@ -98,7 +98,6 @@ public class UpdateUIThread extends Thread {
                         MainActivity.loRootView.setVisibility(View.VISIBLE);
                         ArrayList<BluetoothDevice> connectedDevices = activity.getConnectedDevices();
                         ArrayList<BluetoothDevice> pairedDevices = activity.getPairedDevices();
-                        //ArrayList<Trip> trips = activity.getTrips():
                         activity.loadRecyclerView(pairedDevices, connectedDevices);
                     }
                 });
@@ -300,8 +299,6 @@ public class UpdateUIThread extends Thread {
     void showTripSummary(Trip trip){
         Database db = new Database();
 
-//        trip.setStartCoordinates(startLocation);
-//        trip.setEndCoordinates(destLocation);
         trip.setStartLongitude(startLocation.getLongitude());
         trip.setStartLatitude(startLocation.getLatitude());
         trip.setEndLongitude(destLocation.getLongitude());
@@ -316,7 +313,6 @@ public class UpdateUIThread extends Thread {
                 dialog.setContentView(R.layout.dialog_trip);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                //double tripCost = ((trip.getAvgFuel()*trip.getDistance())/100)*trip.getFuelPrice();
                 DecimalFormat df = new DecimalFormat("#0.00");
 
                 TextView tvAvgFuel = dialog.findViewById(R.id.tvAvgFuel);
@@ -328,11 +324,6 @@ public class UpdateUIThread extends Thread {
                 Button btnSave = dialog.findViewById(R.id.btnSave);
                 Button btnDismiss = dialog.findViewById(R.id.btnDismiss);
 
-//                tvAvgFuel.setText(String.format("Average Fuel Consumption: %s l/100km", df.format(avgFuel)));
-//                tvAvgSpeed.setText(String.format("Average Vehicle Speed: %s km/h", avgSpeed));
-//                tvDistance.setText(String.format("Distance Travelled: %s km", df.format(distance)));
-//                tvDuration.setText(String.format("Time Duration: %s", duration));
-//                tvTripCost.setText(String.format("Trip Cost: %s BGN", df.format(tripCost)));
                 tvAvgFuel.setText(String.format("Average Fuel Consumption: %s l/100km", df.format(trip.getAvgFuel())));
                 tvAvgSpeed.setText(String.format("Average Vehicle Speed: %s km/h", trip.getAvgSpeed()));
                 tvDistance.setText(String.format("Distance Travelled: %s km", df.format(trip.getDistance())));

@@ -99,13 +99,6 @@ public class TransmitDataThread extends Thread{
         AvailablePidsCommand_21_40 AvailablePids_21_40 = new AvailablePidsCommand_21_40();
         AvailablePidsCommand_41_60 AvailablePids_41_60 = new AvailablePidsCommand_41_60();
 
-//        commandsList.clear();
-//        commandsList.add(Speed);
-//        commandsList.add(RPM);
-        //commandsList.add(EngineCoolantTemperature);
-
-
-
         try {
             new EchoOffCommand().run(mmSocket.getInputStream(), mmSocket.getOutputStream());
             new LineFeedOffCommand().run(mmSocket.getInputStream(), mmSocket.getOutputStream());
@@ -114,17 +107,6 @@ public class TransmitDataThread extends Thread{
             AvailablePids_01_20.run(mmSocket.getInputStream(), mmSocket.getOutputStream());
             AvailablePids_21_40.run(mmSocket.getInputStream(), mmSocket.getOutputStream());
             AvailablePids_41_60.run(mmSocket.getInputStream(), mmSocket.getOutputStream());
-
-//            DescribeProtocolCommand describeProtocol = new DescribeProtocolCommand();
-//            DescribeProtocolNumberCommand describeProtocolNumber = new DescribeProtocolNumberCommand();
-//            describeProtocol.run(mmSocket.getInputStream(), mmSocket.getOutputStream());
-//            describeProtocolNumber.run(mmSocket.getInputStream(), mmSocket.getOutputStream());
-//            appendLog(describeProtocol.getName());
-//            appendLog(describeProtocol.getResult());
-//            appendLog(describeProtocol.getFormattedResult());
-//            appendLog(describeProtocolNumber.getName());
-//            appendLog(describeProtocolNumber.getResult());
-//            appendLog(describeProtocolNumber.getFormattedResult());
 
 
             LogWriter.write("[PIDs] ", AvailablePids_01_20.getName());
@@ -136,22 +118,6 @@ public class TransmitDataThread extends Thread{
             LogWriter.write("[PIDs] ", AvailablePids_41_60.getName());
             LogWriter.write("[PIDs] ", AvailablePids_41_60.getResult());
             LogWriter.write("[PIDs] ", AvailablePids_41_60.getFormattedResult());
-
-//            ObdRawCommand avgFuel = new ObdRawCommand("22 F4 01");
-//            ObdRawCommand oilTemp = new ObdRawCommand("22 F5 01");
-//            ObdRawCommand rpm = new ObdRawCommand("22 F5 03");
-//            ObdRawCommand trip = new ObdRawCommand("22 F6 02");
-//            ObdRawCommand dpfStatus = new ObdRawCommand("22 F9 02");
-//            ObdRawCommand ampTemp = new ObdRawCommand("22 FB 00");
-//
-//            commandsList.add(command1);
-//            commandsList.add(avgFuel);
-//            commandsList.add(oilTemp);
-//            commandsList.add(rpm);
-//            commandsList.add(trip);
-//            commandsList.add(dpfStatus);
-//            commandsList.add(ampTemp);
-
 
             //Thread.sleep(5000);
             while (true)

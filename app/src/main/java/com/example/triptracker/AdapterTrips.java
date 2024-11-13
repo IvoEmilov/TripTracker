@@ -148,15 +148,6 @@ public class AdapterTrips extends RecyclerView.Adapter<AdapterTrips.ViewHolder> 
         Trip trip = tripsList.get(position);
         holder.tvStartLocation.setText("Starting Location: -");
         holder.tvDestLocation.setText("Destination Location -");
-//        try{
-//            holder.tvStartLocation.setText(String.format("Starting Coordinates: %s, %s", trip.getStartCoordinates().getLatitude(), trip.getStartCoordinates().getLongitude()));
-//            holder.tvDestLocation.setText(String.format("Destination Coordinates: %s, %s", trip.getEndCoordinates().getLatitude(), trip.getEndCoordinates().getLongitude()));
-//        }
-//        catch (NullPointerException e){
-//            LogWriter.writeError("[ERROR_LOCATION]: ","Unable to obtain location coordinates.");
-//            holder.tvStartLocation.setText("Starting Location: -");
-//            holder.tvDestLocation.setText("Destination Location -");
-//        }
         holder.tvAvgFuel.setText(String.format("Average Fuel Consumption: %s l/100km", df.format(trip.getAvgFuel())));
         holder.tvAvgSpeed.setText(String.format("Average Vehicle Speed: %s km/h", trip.getAvgSpeed()));
         holder.tvDistance.setText(String.format("Distance Travelled: %s km", df.format(trip.getDistance())));
@@ -213,7 +204,6 @@ public class AdapterTrips extends RecyclerView.Adapter<AdapterTrips.ViewHolder> 
     }
 
     private Point getMidPoint(Point start, Point end){
-        //Cartesian coordinates for the two points
         double lat1 = start.latitude();
         double lng1 = start.longitude();
         double lat2 = end.latitude();
@@ -233,7 +223,6 @@ public class AdapterTrips extends RecyclerView.Adapter<AdapterTrips.ViewHolder> 
         else{
             lngMid = lng1+((lng2 - lng1)/2);
         }
-        Log.d("POINT", String.format("%s, %s", latMid, lngMid));
         return Point.fromLngLat(lngMid, latMid);
     }
 }

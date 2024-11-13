@@ -14,22 +14,6 @@ public class Trip {
     private double endLongitude;
     private double endLatitude;
 
-
-//    public Trip(Location startCoordinates, Location endCoordinates, double avgFuel, String avgSpeed, double distance, String duration, double fuelPrice) {
-//
-//        this.startCoordinates = startCoordinates;
-//        this.endCoordinates = endCoordinates;
-//        this.avgFuel = avgFuel;
-//        this.avgSpeed = avgSpeed;
-//        this.distance = distance;
-//        this.duration = duration;
-//        this.fuelPrice = fuelPrice;
-//
-//        tripCost = ((avgFuel*distance)/100)*fuelPrice;
-//
-//        this.position = MainActivity.adapterTrips.getItemCount();
-//    }
-
     public Trip(double avgFuel, String avgSpeed, double distance, String duration, double fuelPrice) {
 
         this.avgFuel = avgFuel;

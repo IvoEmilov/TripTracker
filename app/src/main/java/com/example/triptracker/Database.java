@@ -13,13 +13,10 @@ import java.util.Locale;
 
 public class Database {
     private FirebaseDatabase database = FirebaseDatabase.getInstance("https://buddycartracker-default-rtdb.europe-west1.firebasedatabase.app/");
-    //private DatabaseReference rootRef = database.getReference();
-    //private DatabaseReference usersRef = database.getReference("users");
     private FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
     private DatabaseReference userRef = database.getReference("users").child(currUser.getUid());
 
-    public void initDatabase(final CallbackDB innitCB){
-        //DatabaseReference userRef = database.getReference("users").child(currUser.getUid());
+    public void initDatabase(final CallbackDB innitCB){;
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

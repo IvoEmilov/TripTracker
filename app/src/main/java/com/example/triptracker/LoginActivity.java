@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;//just random number for Google to create the intent
     private Button btnLogin;
     private FirebaseAuth mAuth;
-/*
+/* Method is used for automatic login after the first one.
     @Override
     public void onStart() {
         super.onStart();

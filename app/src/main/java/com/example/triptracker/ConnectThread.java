@@ -53,7 +53,6 @@ class ConnectThread extends Thread {
                 mmSocket.close();
             } catch (IOException closeException) {
                 LogWriter.writeError("[IOException_C-Thread] ", closeException.toString());
-                //Log.d("LOGMESSAGE","Could not close the client socket");
                 UIThread.showToast("Could not close the client socket");
             }
             return;
@@ -75,7 +74,6 @@ class ConnectThread extends Thread {
         } catch (IOException e) {
             LogWriter.writeError("[IOException_C-Thread] ", e.toString());
             UIThread.showToast("Error closing the connection.");
-            //Log.d("LOGMESSAGE","Error closing the connection.");
         }
     }
 
