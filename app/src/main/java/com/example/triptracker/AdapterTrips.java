@@ -166,7 +166,7 @@ public class AdapterTrips extends RecyclerView.Adapter<AdapterTrips.ViewHolder> 
                 //Point endPoint = Point.fromLngLat(trip.getEndCoordinates().getLongitude(), trip.getEndCoordinates().getLatitude());
                 //Point endPoint = Point.fromLngLat(23.353902, 42.657138); //TU 2-ri blok
                 //Point endPoint = Point.fromLngLat(23.37575068, 42.66727196); //TechPark
-                holder.mapView.getMapboxMap().setCamera(new CameraOptions.Builder().center(getMidPoint(startPoint, endPoint)).zoom(10.0).build());
+                holder.mapView.getMapboxMap().setCamera(new CameraOptions.Builder().center(getMidPoint(startPoint, endPoint)).zoom(calculateMapZoom(trip.getDistance())).build());
                 locationComponentPlugin.setEnabled(true);
                 locationComponentPlugin.setLocationProvider(navigationLocationProvider);
 
@@ -224,5 +224,25 @@ public class AdapterTrips extends RecyclerView.Adapter<AdapterTrips.ViewHolder> 
             lngMid = lng1+((lng2 - lng1)/2);
         }
         return Point.fromLngLat(lngMid, latMid);
+    }
+
+    private double calculateMapZoom(double tripDistance){
+        if(tripDistance<1.0){
+            return 14.0;
+        }
+        else if(tripDistance>=1.0 && tripDistance <= 5.0){
+            return 12.0;
+        }
+        else if(tripDistance>5.0 && tripDistance <25.0){
+            return 10.0;
+        }
+        else if(tripDistance>=25.0 && tripDistance <=50.0){
+            return 9.0;
+        }
+        else if(tripDistance>50.0)
+        {
+            return 8.0;
+        }
+        return 10.0;
     }
 }
