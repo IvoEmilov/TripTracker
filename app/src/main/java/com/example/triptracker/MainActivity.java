@@ -176,6 +176,12 @@ public class MainActivity extends AppCompatActivity {
     private final NavigationLocationProvider navigationLocationProvider = new NavigationLocationProvider();
     private MapboxRouteLineView routeLineView;
     private MapboxRouteLineApi routeLineApi;
+
+
+    @Override
+    public void onBackPressed() {
+        //Just to disable android back button.
+    }
     private final LocationObserver locationObserver = new LocationObserver() {
         @Override
         public void onNewRawLocation(@NonNull Location location) {

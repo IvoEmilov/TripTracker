@@ -204,6 +204,7 @@ public class UpdateUIThread extends Thread {
                                 thread.interrupt();
 
                                 MainActivity.devicesSV.setVisibility(View.VISIBLE);
+                                MainActivity.tripsSV.setVisibility(View.GONE);
                                 MainActivity.loMap.setVisibility(View.GONE);
                                 MainActivity.loCalculations.setVisibility(View.GONE);
                                 MainActivity.loData.setVisibility(View.GONE);
