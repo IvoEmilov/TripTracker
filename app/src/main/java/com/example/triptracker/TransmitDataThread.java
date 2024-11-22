@@ -6,6 +6,10 @@ import android.bluetooth.BluetoothSocket;
 
 import com.github.pires.obd.commands.ObdCommand;
 import com.github.pires.obd.commands.SpeedCommand;
+import com.github.pires.obd.commands.control.DtcNumberCommand;
+import com.github.pires.obd.commands.control.PendingTroubleCodesCommand;
+import com.github.pires.obd.commands.control.PermanentTroubleCodesCommand;
+import com.github.pires.obd.commands.control.TroubleCodesCommand;
 import com.github.pires.obd.commands.control.VinCommand;
 import com.github.pires.obd.commands.engine.LoadCommand;
 import com.github.pires.obd.commands.engine.MassAirFlowCommand;
@@ -39,6 +43,8 @@ public class TransmitDataThread extends Thread{
     UpdateUIThread UIThread;
     DataCalculations calc;
 
+    public static boolean dtcFlag = Boolean.FALSE;
+
     SpinnerTxItem spinnerTxItem1 = new SpinnerTxItem();
     SpinnerTxItem spinnerTxItem2 = new SpinnerTxItem();
     Map<String, ObdCommand> commandsMap
@@ -50,33 +56,35 @@ public class TransmitDataThread extends Thread{
 //    BarometricPressureCommand BarometricPressure = new BarometricPressureCommand();
 //    FuelPressureCommand FuelPressure = new FuelPressureCommand();
 //    FuelRailPressureCommand FuelRailPressure = new FuelRailPressureCommand();
-    IntakeManifoldPressureCommand IntakeManifoldPressure = new IntakeManifoldPressureCommand();
+//    IntakeManifoldPressureCommand IntakeManifoldPressure = new IntakeManifoldPressureCommand();
 //    AirFuelRatioCommand AirFuelRatio = new AirFuelRatioCommand();
     ConsumptionRateCommand ConsumptionRate = new ConsumptionRateCommand();
-    FindFuelTypeCommand FindFuelType = new FindFuelTypeCommand();
-    FuelLevelCommand FuelLevel = new FuelLevelCommand();
+//    FindFuelTypeCommand FindFuelType = new FindFuelTypeCommand();
+//    FuelLevelCommand FuelLevel = new FuelLevelCommand();
 //    FuelTrimCommand FuelTrim = new FuelTrimCommand();
 //    WidebandAirFuelRatioCommand WidebandAirFuelRatio = new WidebandAirFuelRatioCommand();
 //    AbsoluteLoadCommand AbsoluteLoad = new AbsoluteLoadCommand();
-    LoadCommand Load = new LoadCommand();
+//    LoadCommand Load = new LoadCommand();
     MassAirFlowCommand MassAirFlow = new MassAirFlowCommand();
     OilTempCommand OilTemp = new OilTempCommand();
     RPMCommand RPM = new RPMCommand();
     ThrottlePositionCommand ThrottlePosition = new ThrottlePositionCommand();
 //    DistanceMILOnCommand DistanceMILOn = new DistanceMILOnCommand();
 //    DistanceSinceCCCommand DistanceSinceCC = new DistanceSinceCCCommand();
-//    DtcNumberCommand DtcNumber = new DtcNumberCommand();
+
 //    EquivalentRatioCommand EquivalentRatio = new EquivalentRatioCommand();
 //    IgnitionMonitorCommand IgnitionMonitor = new IgnitionMonitorCommand();
 //    ModuleVoltageCommand ModuleVoltage = new ModuleVoltageCommand();
-//    PendingTroubleCodesCommand PendingTroubleCodes = new PendingTroubleCodesCommand();
-//    PermanentTroubleCodesCommand PermanentTroubleCodes = new PermanentTroubleCodesCommand();
+    PendingTroubleCodesCommand PendingTroubleCodes = new PendingTroubleCodesCommand();
+    PermanentTroubleCodesCommand PermanentTroubleCodes = new PermanentTroubleCodesCommand();
 //    TimingAdvanceCommand TimingAdvance = new TimingAdvanceCommand();
-//    TroubleCodesCommand TroubleCodes = new TroubleCodesCommand();
+
     SpeedCommand Speed = new SpeedCommand();
     VinCommand Vin = new VinCommand();
 
     ArrayList<SpinnerTxItem> commandsList = new ArrayList<>();
+
+
 
     public TransmitDataThread(BluetoothSocket mmSocket, MainActivity activity, BluetoothDevice device) {
         this.mmSocket = mmSocket;
@@ -150,6 +158,17 @@ public class TransmitDataThread extends Thread{
                     if(mafFlag == Boolean.FALSE){
                         executeCommand(MassAirFlow);
                     }
+                    if(dtcFlag == Boolean.TRUE){
+                        DtcNumberCommand DtcNumber = new DtcNumberCommand();
+                        TroubleCodesCommand TroubleCodes = new TroubleCodesCommand();
+                        executeCommand(DtcNumber);
+                        if(DtcNumber.getTotalAvailableCodes() >0){
+                            executeCommand(TroubleCodes);
+                        }
+                        dtcFlag = Boolean.FALSE;
+                        Thread.sleep(1000);
+                        UIThread.showDTCReport(DtcNumber, TroubleCodes);
+                    }
                 }
                 catch (Exception e){
                     LogWriter.writeError("[Exception_TD-Thread] ", e.toString());
@@ -212,5 +231,4 @@ public class TransmitDataThread extends Thread{
         LogWriter.write("[Command][RX/RAW] ", String.format("[%s] %s / %s", command.getName(),command.getFormattedResult(), command.getResult()));
         return command.getFormattedResult();
     }
-
 }

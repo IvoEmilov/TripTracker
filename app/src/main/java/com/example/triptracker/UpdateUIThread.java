@@ -16,6 +16,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.pires.obd.commands.control.DtcNumberCommand;
+import com.github.pires.obd.commands.control.TroubleCodesCommand;
+
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -24,6 +27,7 @@ import java.util.ArrayList;
 public class UpdateUIThread extends Thread {
 
     private MainActivity activity;
+    private ProfileActivity profileActivity;
     private BluetoothAdapter btAdapter;
     private static Context applicationContext;
 
@@ -48,15 +52,16 @@ public class UpdateUIThread extends Thread {
     public UpdateUIThread(MainActivity activity) {
         this.activity = activity;
     }
-
-    ;
+    public UpdateUIThread(ProfileActivity activity) {
+        this.profileActivity = activity;
+    }
 
     public UpdateUIThread(MainActivity activity, BluetoothAdapter btAdapter) {
         this.activity = activity;
         this.btAdapter = btAdapter;
     }
 
-    ;
+
 
     public void run() {
         while (true) {
@@ -245,6 +250,47 @@ public class UpdateUIThread extends Thread {
                         }
                     });
                 }
+            }
+        });
+    }
+
+    void showDTCReport(DtcNumberCommand DtcNumber, TroubleCodesCommand TroubleCodes){
+        activity.runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                Dialog dialog = new Dialog(activity);
+                dialog.setContentView(R.layout.dialog_dtc);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Button buttonOk = dialog.findViewById(R.id.btnOk);
+                TextView tvCheckEngine = dialog.findViewById(R.id.tvCheckEngine);
+                TextView tvDtcCnt = dialog.findViewById(R.id.tvDtcCnt);
+                TextView tvDtcList = dialog.findViewById(R.id.tvDtcList);
+                if(DtcNumber.getMilOn()){
+                    tvCheckEngine.setText("Check engine light is ON.");
+                }
+                int cntDtc = DtcNumber.getTotalAvailableCodes();
+                String numberDTCs;
+                if(cntDtc == 1){
+                    numberDTCs = "There is " + String.valueOf(cntDtc) + " DTC found.";
+                }
+                else{
+                    numberDTCs = "There are " + String.valueOf(cntDtc) + " DTCs found.";
+                }
+                tvDtcCnt.setText(numberDTCs);
+                tvDtcList.setText(TroubleCodes.getFormattedResult());
+
+
+
+                buttonOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
             }
         });
     }

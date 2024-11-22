@@ -50,6 +50,19 @@
         android:background="@android:color/darker_gray"/>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnReadDTCs"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="@color/white"
+        android:drawableLeft="@drawable/dtc_icon"
+        android:paddingStart="15dp"
+        android:gravity="start"
+        android:textIsSelectable="false"
+        android:textSize="20sp"
+        android:layout_marginTop="5dp"
+        android:text="\tRead DTC" />
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnLogOut"
         android:layout_width="match_parent"
         android:layout_height="35dp"

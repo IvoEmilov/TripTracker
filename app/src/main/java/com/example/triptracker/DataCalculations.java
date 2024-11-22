@@ -21,8 +21,6 @@ public class DataCalculations {
     private static double fuelPrice = 0.00;
     private long startTime;
 
-
-
     private final double AirFuelRatio = 14.7;
     private final double FuelDensity = 0.832;
 
@@ -147,5 +145,4 @@ public class DataCalculations {
         }
         return previousDistance;
     }
-
 }
