@@ -132,9 +132,9 @@
 
         <TextView
             android:id="@+id/tvHeader"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
             android:padding="15dp"
             android:text="Connect to a device"
             android:textColor="#1f1f1f"

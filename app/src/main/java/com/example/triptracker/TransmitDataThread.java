@@ -27,6 +27,7 @@ import com.github.pires.obd.commands.temperature.AmbientAirTemperatureCommand;
 import com.github.pires.obd.commands.temperature.EngineCoolantTemperatureCommand;
 import com.github.pires.obd.enums.ObdProtocols;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -92,7 +93,7 @@ public class TransmitDataThread extends Thread{
 
         UIThread.establishedConnectionUI(device.getName());
         populateCommandsMap();
-        UIThread.closeConnection(mmSocket, this);
+        UIThread.closeConnection(mmSocket, this, Boolean.FALSE);
 
         /*Create list of commands to poll everything and see which are available in the Ibiza*/
         AvailablePidsCommand_01_20 AvailablePids_01_20 = new AvailablePidsCommand_01_20();
@@ -190,6 +191,17 @@ public class TransmitDataThread extends Thread{
     private String executeCommand(ObdCommand command){
         try{
             command.run(mmSocket.getInputStream(), mmSocket.getOutputStream());
+        }
+        catch (IOException e){
+            if(e.toString().contains("socket closed")){
+                UIThread.closeConnection(mmSocket, this, Boolean.TRUE);
+            }
+            else{
+                LogWriter.writeError("[Command] ", command.getName());
+                LogWriter.writeError("[DID] ", command.getCommandPID());
+                LogWriter.writeError("[Error_ExecuteCmd] ", e.toString());
+                return "Error reading value";
+            }
         }
         catch (Exception e){
             LogWriter.writeError("[Command] ", command.getName());

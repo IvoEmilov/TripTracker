@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -163,6 +164,8 @@ public class UpdateUIThread extends Thread {
                 MainActivity.loFooter.setVisibility(View.VISIBLE);
                 MainActivity.data1Spinner.setSelection(0);
                 MainActivity.data1Spinner.setSelection(1);
+                MainActivity.btnNavigation.setBackgroundResource(R.drawable.footer_layout_border_leftbtn_filled);
+                MainActivity.btnTrips.setBackgroundResource(R.drawable.footer_layout_border_rightbtn);
                 if(!initMapFlag){
                     activity.initMap();
                     initMapFlag = Boolean.TRUE;
@@ -171,57 +174,77 @@ public class UpdateUIThread extends Thread {
         });
     }
 
-    void closeConnection(BluetoothSocket socket, TransmitDataThread thread){
+    void closeConnection(BluetoothSocket socket, TransmitDataThread thread, boolean ignitionOffFlag){
         activity.runOnUiThread(new Runnable()
         {
             @Override
             public void run()
             {
-                MainActivity.tvHeader.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                if(ignitionOffFlag){
+                    try {
+                        destLocation = getCurrentLocation();
+                        socket.close();
+                        thread.interrupt();
 
-                        Dialog dialog = new Dialog(activity);
-                        dialog.setContentView(R.layout.dialog_disconnect);
-                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                        Button btnDisconnect = dialog.findViewById(R.id.btnDisconnect);
-                        Button btnCancel = dialog.findViewById(R.id.btnCancel);
-
-                        btnCancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                        btnDisconnect.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                try {
-                                destLocation = getCurrentLocation();
-                                socket.close();
-                                thread.interrupt();
-
-                                MainActivity.devicesSV.setVisibility(View.VISIBLE);
-                                MainActivity.tripsSV.setVisibility(View.GONE);
-                                MainActivity.loMap.setVisibility(View.GONE);
-                                MainActivity.loCalculations.setVisibility(View.GONE);
-                                MainActivity.loData.setVisibility(View.GONE);
-                                MainActivity.loFooter.setVisibility(View.GONE);
-                                MainActivity.tvHeader.setText("Connect to a device");
-                                MainActivity.tvHeader.setEnabled(Boolean.FALSE);
-                                dialog.dismiss();
-
-                                } catch (IOException e) {
-                                    LogWriter.writeError("[Socket_UI-Thread]",e.toString());
-                                }
-                            }
-                        });
-
-                        dialog.show();
+                        MainActivity.devicesSV.setVisibility(View.VISIBLE);
+                        MainActivity.tripsSV.setVisibility(View.GONE);
+                        MainActivity.loMap.setVisibility(View.GONE);
+                        MainActivity.loCalculations.setVisibility(View.GONE);
+                        MainActivity.loData.setVisibility(View.GONE);
+                        MainActivity.loFooter.setVisibility(View.GONE);
+                        MainActivity.tvHeader.setText("Connect to a device");
+                        MainActivity.tvHeader.setEnabled(Boolean.FALSE);
+                    } catch (IOException e) {
+                        LogWriter.writeError("[Socket_UI-Thread]",e.toString());
                     }
-                });
+                }
+                else{
+                    MainActivity.tvHeader.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            Dialog dialog = new Dialog(activity);
+                            dialog.setContentView(R.layout.dialog_disconnect);
+                            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                            Button btnDisconnect = dialog.findViewById(R.id.btnDisconnect);
+                            Button btnCancel = dialog.findViewById(R.id.btnCancel);
+
+                            btnCancel.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    dialog.dismiss();
+                                }
+                            });
+
+                            btnDisconnect.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    try {
+                                        destLocation = getCurrentLocation();
+                                        socket.close();
+                                        thread.interrupt();
+
+                                        MainActivity.devicesSV.setVisibility(View.VISIBLE);
+                                        MainActivity.tripsSV.setVisibility(View.GONE);
+                                        MainActivity.loMap.setVisibility(View.GONE);
+                                        MainActivity.loCalculations.setVisibility(View.GONE);
+                                        MainActivity.loData.setVisibility(View.GONE);
+                                        MainActivity.loFooter.setVisibility(View.GONE);
+                                        MainActivity.tvHeader.setText("Connect to a device");
+                                        MainActivity.tvHeader.setEnabled(Boolean.FALSE);
+                                        dialog.dismiss();
+
+                                    } catch (IOException e) {
+                                        LogWriter.writeError("[Socket_UI-Thread]",e.toString());
+                                    }
+                                }
+                            });
+
+                            dialog.show();
+                        }
+                    });
+                }
             }
         });
     }
@@ -234,6 +257,7 @@ public class UpdateUIThread extends Thread {
 
                 MainActivity.imgAppLogo.setEnabled(Boolean.TRUE);
                 MainActivity.devicesSV.setVisibility(View.GONE);
+                MainActivity.tvHeader.setEnabled(Boolean.TRUE);
                 MainActivity.loMap.setVisibility(View.VISIBLE);
                 MainActivity.loCalculations.setVisibility(View.GONE);
                 MainActivity.loData.setVisibility(View.GONE);
@@ -254,6 +278,7 @@ public class UpdateUIThread extends Thread {
             @Override
             public void run() {
                 MainActivity.devicesSV.setVisibility(View.VISIBLE);
+                MainActivity.tvHeader.setEnabled(Boolean.FALSE);
                 MainActivity.loMap.setVisibility(View.GONE);
                 MainActivity.loCalculations.setVisibility(View.GONE);
                 MainActivity.loData.setVisibility(View.GONE);
