@@ -52,6 +52,7 @@
         </activity>
         <activity android:name="com.example.triptracker.MainActivity" />
         <activity android:name="com.example.triptracker.ProfileActivity" />
+        <activity android:name="com.example.triptracker.WebviewActivity" />
     </application>
 
 </manifest>

@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
@@ -12,9 +13,15 @@ import android.location.LocationManager;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.pires.obd.commands.control.DtcNumberCommand;
 import com.github.pires.obd.commands.control.TroubleCodesCommand;
@@ -22,6 +29,8 @@ import com.github.pires.obd.commands.control.TroubleCodesCommand;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class UpdateUIThread extends Thread {
@@ -266,7 +275,6 @@ public class UpdateUIThread extends Thread {
                 Button buttonOk = dialog.findViewById(R.id.btnOk);
                 TextView tvCheckEngine = dialog.findViewById(R.id.tvCheckEngine);
                 TextView tvDtcCnt = dialog.findViewById(R.id.tvDtcCnt);
-                TextView tvDtcList = dialog.findViewById(R.id.tvDtcList);
                 if(DtcNumber.getMilOn()){
                     tvCheckEngine.setText("Check engine light is ON.");
                 }
@@ -279,9 +287,25 @@ public class UpdateUIThread extends Thread {
                     numberDTCs = "There are " + String.valueOf(cntDtc) + " DTCs found.";
                 }
                 tvDtcCnt.setText(numberDTCs);
-                tvDtcList.setText(TroubleCodes.getFormattedResult());
 
+                String[] codes = TroubleCodes.getFormattedResult().split("/")[0].split("\n");
 
+                RecyclerView recyclerView = dialog.findViewById(R.id.recyclerView);
+                List<String> items = Arrays.asList(codes);
+
+                TextAdapter adapter = new TextAdapter(items);
+                View.OnClickListener onClickListener = v -> {
+                    int position = ((RecyclerView.LayoutParams) v.getLayoutParams()).getViewAdapterPosition();
+                    String item = items.get(position);
+                    Log.d("[Item]", item);
+                    Intent intent = new Intent(activity, WebviewActivity.class);
+                    intent.putExtra("dtc", item);
+                    activity.startActivity(intent);
+                };
+                adapter.setOnClickListener(onClickListener);
+
+                recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+                recyclerView.setAdapter(adapter);
 
                 buttonOk.setOnClickListener(new View.OnClickListener() {
                     @Override

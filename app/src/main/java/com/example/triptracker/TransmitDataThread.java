@@ -166,7 +166,6 @@ public class TransmitDataThread extends Thread{
                             executeCommand(TroubleCodes);
                         }
                         dtcFlag = Boolean.FALSE;
-                        Thread.sleep(1000);
                         UIThread.showDTCReport(DtcNumber, TroubleCodes);
                     }
                 }
