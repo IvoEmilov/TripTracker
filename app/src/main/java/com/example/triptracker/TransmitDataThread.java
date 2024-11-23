@@ -3,6 +3,8 @@ package com.example.triptracker;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.media.MediaPlayer;
+import android.view.View;
 
 import com.github.pires.obd.commands.ObdCommand;
 import com.github.pires.obd.commands.SpeedCommand;
@@ -29,6 +31,7 @@ import com.github.pires.obd.commands.protocol.SelectProtocolCommand;
 import com.github.pires.obd.commands.temperature.AirIntakeTemperatureCommand;
 import com.github.pires.obd.commands.temperature.AmbientAirTemperatureCommand;
 import com.github.pires.obd.commands.temperature.EngineCoolantTemperatureCommand;
+import com.github.pires.obd.commands.temperature.TemperatureCommand;
 import com.github.pires.obd.enums.ObdProtocols;
 
 import java.io.IOException;
@@ -44,6 +47,7 @@ public class TransmitDataThread extends Thread{
     DataCalculations calc;
 
     public static boolean dtcFlag = Boolean.FALSE;
+    private static boolean warningFlag = Boolean.FALSE;
 
     SpinnerTxItem spinnerTxItem1 = new SpinnerTxItem();
     SpinnerTxItem spinnerTxItem2 = new SpinnerTxItem();
@@ -98,6 +102,8 @@ public class TransmitDataThread extends Thread{
     public void run() {
         boolean speedFlag;
         boolean mafFlag;
+        final MediaPlayer mp = MediaPlayer.create(activity, R.raw.beep);
+        mp.setLooping(Boolean.TRUE);
 
         UIThread.establishedConnectionUI(device.getName());
         populateCommandsMap();
@@ -150,6 +156,23 @@ public class TransmitDataThread extends Thread{
                         }
                         if(item.getCommand().getClass() == MassAirFlow.getClass()){
                             mafFlag = Boolean.TRUE;
+                        }
+                        if(item.getCommand().getClass() == EngineCoolantTemperature.getClass()){
+                            if(Integer.parseInt(item.getCommand().getFormattedResult().split("C")[0])>95){
+                                if(!warningFlag){
+                                    UIThread.handleTemp(R.color.red);
+                                    mp.start();
+                                }
+                                warningFlag = Boolean.TRUE;
+                            }
+                            else{
+                                if(warningFlag){
+                                    UIThread.handleTemp(R.color.light_gray);
+                                    mp.pause();
+                                    mp.seekTo(0);
+                                    warningFlag = Boolean.FALSE;
+                                }
+                            }
                         }
                     }
                     if(speedFlag == Boolean.FALSE){

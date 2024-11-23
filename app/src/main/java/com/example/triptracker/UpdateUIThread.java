@@ -392,6 +392,15 @@ public class UpdateUIThread extends Thread {
         });
     }
 
+    void handleTemp(int colour){
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MainActivity.tvData1.setBackgroundResource(colour);
+            }
+        });
+    }
+
     void showTripSummary(Trip trip){
         Database db = new Database();
 
