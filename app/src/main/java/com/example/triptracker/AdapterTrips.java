@@ -70,7 +70,7 @@ public class AdapterTrips extends RecyclerView.Adapter<AdapterTrips.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnTouchListener, GestureDetector.OnGestureListener {
 
-        private TextView tvAvgFuel, tvAvgSpeed, tvDistance, tvDuration, tvTripCost, tvStartLocation, tvDestLocation;
+        private TextView tvAvgFuel, tvAvgSpeed, tvDistance, tvDuration, tvTripCost;
         private CardView cardViewTrips;
         private GestureDetector gestureDetector;
         private MapView mapView;
@@ -81,8 +81,6 @@ public class AdapterTrips extends RecyclerView.Adapter<AdapterTrips.ViewHolder> 
             cardViewTrips = itemView.findViewById(R.id.cardViewTrips);
 
             mapView = itemView.findViewById(R.id.mapView);
-            tvStartLocation = itemView.findViewById(R.id.tvStartLocation);
-            tvDestLocation = itemView.findViewById(R.id.tvDestLocation);
             tvAvgFuel = itemView.findViewById(R.id.tvAvgFuel);
             tvAvgSpeed = itemView.findViewById(R.id.tvAvgSpeed);
             tvDistance = itemView.findViewById(R.id.tvDistance);
@@ -146,8 +144,6 @@ public class AdapterTrips extends RecyclerView.Adapter<AdapterTrips.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Trip trip = tripsList.get(position);
-        holder.tvStartLocation.setText("Starting Location: -");
-        holder.tvDestLocation.setText("Destination Location -");
         holder.tvAvgFuel.setText(String.format("Average Fuel Consumption: %s l/100km", df.format(trip.getAvgFuel())));
         holder.tvAvgSpeed.setText(String.format("Average Vehicle Speed: %s km/h", trip.getAvgSpeed()));
         holder.tvDistance.setText(String.format("Distance Travelled: %s km", df.format(trip.getDistance())));

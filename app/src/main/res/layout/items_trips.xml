@@ -53,26 +53,6 @@
                     android:layout_height="650dp"/>
 
                 <TextView
-                    android:id="@+id/tvStartLocation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Start Location: -"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tvDestLocation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Destination Location: -"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
-                    android:textSize="16sp" />
-
-                <TextView
                     android:id="@+id/tvAvgFuel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
